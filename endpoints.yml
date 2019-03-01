@@ -1,0 +1,10 @@
+action_endpoint:
+  url: http://192.168.109.232:5055/webhook
+nlu:
+  url: http://192.168.109.232:5000
+tracker_store:
+    store_type: mongod
+    url: mongodb://192.168.110.51:27017
+    db: rasa
+    username:
+    password:

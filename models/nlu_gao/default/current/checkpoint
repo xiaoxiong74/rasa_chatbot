@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/pywork/kf7899/rasa_chatbot_cn/models/nlu_gao/default/current/intent_classifier_tensorflow_embedding.ckpt"
+all_model_checkpoint_paths: "/home/pywork/kf7899/rasa_chatbot_cn/models/nlu_gao/default/current/intent_classifier_tensorflow_embedding.ckpt"

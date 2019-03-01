@@ -1,0 +1,102 @@
+%YAML 1.1
+---
+actions:
+- utter_ask_phonenum
+- action_search_consume
+- utter_ask_morehelp
+- utter_default
+- utter_confirm
+- utter_thanks
+- action_unknown_intent
+- utter_ask_time
+- utter_goodbye
+- utter_ask_casetime
+- utter_ack_management
+- utter_greet
+- utter_ask_package
+- utter_ask_place
+entities:
+- item
+- price
+- duration
+- place
+- package
+- phone_number
+- case
+- number
+- day
+- time
+forms:
+- case_form
+intents:
+- confirm
+- deny
+- inform_case
+- request_search
+- greet
+- goodbye
+- thanks
+- inform
+- inform_time
+- request_management
+- unknown_intent:
+    use_entities: false
+- searchCases
+slots:
+  case:
+    type: text
+  day:
+    type: text
+  item:
+    type: text
+  package:
+    type: text
+  phone_number:
+    type: text
+  place:
+    type: text
+  price:
+    type: text
+  requested_slot:
+    type: unfeaturized
+  time:
+    type: text
+templates:
+  utter_ack_management:
+  - text: 已经为您办理好了{package}
+  utter_ask_casetime:
+  - text: 你要查什么时候的{case}？
+  - text: 你查哪个时间的{case}呢？
+  utter_ask_morehelp:
+  - text: 还有什么能帮您吗？
+  - text: 您还需要什么服务？
+  utter_ask_package:
+  - text: 我们现在支持办理流量套餐：套餐一：二十元包月三十兆；套餐二：四十元包月八十兆，请问您需要哪个？
+  - text: 我们有如下套餐供您选择：套餐一：二十元包月三十兆；套餐二：四十元包月八十兆，请问您需要哪个？
+  utter_ask_phonenum:
+  - text: 你想查的手机号码是？
+  utter_ask_place:
+  - text: 你要查询哪个地方的{case}？
+  - text: 你要查询附近哪里的{case}？
+  utter_ask_time:
+  - text: 你想查哪个时间段的？
+  - text: 你想查几月份的？
+  utter_confirm:
+  - text: 你确认吗？
+  utter_default:
+  - text: 您说什么，小贝听不懂。
+  - text: 你说的小贝不懂呀！
+  - text: 不好意思，您能换个说法吗？
+  utter_goodbye:
+  - text: 再见，为您服务很开心
+  - text: Bye， 下次再见
+  utter_greet:
+  - text: 您好! 我是机器人小贝，很高兴为您服务。
+  - text: 你好! 我是小贝，可以帮您办理流量套餐，话费查询等业务。
+  - text: hi! 我是小贝，有什么可以帮您吗。
+  utter_search_template:
+  - text: 正在查询你的案子，请稍等···
+  utter_thanks:
+  - text: 不用谢
+  - text: 我应该做的
+  - text: 您开心我就开心

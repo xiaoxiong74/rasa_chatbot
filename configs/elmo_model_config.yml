@@ -1,0 +1,11 @@
+language: "zh"
+
+pipeline:
+- name: "tokenizer_jieba"
+- name: "ner_crf"
+- name: "ner_duckling"
+  language: "zh$core"
+  dimensions: [ "time", "number", "duration", "phone-number"]
+- name: "intent_featurizer_wordvector"
+  elmo: "/home/pywork/kf7899/datas/xinhua_elmo_trained_model/"
+- name: "intent_classifier_tensorflow_embedding"

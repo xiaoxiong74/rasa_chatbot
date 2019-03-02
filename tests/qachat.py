@@ -1,12 +1,23 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 @author: xiongyongfu
 @contact: xyf_0704@sina.com
 @file: qachat.py
 @Software: PyCharm
 @time: 2019/2/27 10:38
-@desc:
-'''
+@desc: 一个最简单的Q&A问答，快速实现，重复模块、结构、模型未优化
+
+qa_bot.csv结构：
+-------------------------------------------------------------------------------------
+| question                     | answer
+-------------------------------------------------------------------------------------
+| windows命令行关机             | 打开cmd-> 输入：shutdown(直接关机)   shutdown -r(重启)
+-------------------------------------------------------------------------------------
+| windows下查看ip地址           | 打开cmd-> 输入：ipconfig
+-------------------------------------------------------------------------------------
+"""
+
+
 from gensim import corpora, models, similarities
 import jieba
 import csv
@@ -27,12 +38,11 @@ def stopwordslist(filepath):
     return wlst
 
 
-stop_words = stopwordslist('/home/pywork/kf7899/rasa_chatbot_cn/data/stop_words.txt')
+stop_words = stopwordslist('../data/stop_words.txt')
 
 
 def seg_sentence(sentence,stop_words):
     sentence_seged = jieba.cut(sentence.strip())
-    # sentence_seged = set(sentence_seged)
     outstr = ''
     for word in sentence_seged:
         if word not in stop_words:
@@ -53,9 +63,11 @@ corpus = [dictionary1.doc2bow(text) for text in texts]
 # 4、使用【TF-IDF模型】处理语料库
 tfidf = models.TfidfModel(corpus)
 
+
 def get_qa(query):
     # print("********************************************************************************")
     keyword = query
+    # keyword = input("**用户**：")
     # if keyword == 'quit' or keyword == 'exit':
     #     break
 
@@ -65,14 +77,10 @@ def get_qa(query):
     index = similarities.SparseMatrixSimilarity(tfidf[corpus], num_features=feature_cnt)
     # 7、相似度计算
     sim = index[tfidf[kw_vector]]
-    # dictionary = dict(zip(texts1,sim))
-    # list1= sorted(dictionary.items(),key=lambda x:x[1])
-    # print(list1)
-    dictionary = {}
     result = []
     for i in range(len(sim)):
         temp = []
-        # print('keyword 与 text%d 相似度为：%.2f' % (i + 1, sim[i]),texts1[i])
+        # 只取相似度大于0.6的
         if sim[i] >= 0.6:
             temp.append(sim[i])
             temp.append(texts1[i])

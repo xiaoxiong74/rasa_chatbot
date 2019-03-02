@@ -28,7 +28,7 @@ def extract_item(item):
 
 
 def get_response(msg):
-    key = '02703d8281304352a359bf1900e2058e'
+    key = ''
     api = 'http://www.tuling123.com/openapi/api?key={}&info={}'.format(key, msg)
     return requests.get(api).json()
 
@@ -89,7 +89,6 @@ class ActionUnknowIntent(Action):
                 dispatcher.utter_template('utter_default', tracker, silent_fail=True)
         return []
 
-        # return [UserUtteranceReverted()]
 
 
 class CaseForm(FormAction):

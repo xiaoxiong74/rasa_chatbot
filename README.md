@@ -6,6 +6,10 @@
 >  * 1: 办理套餐、查询话费和流量(会话场景1)
 >  * 2：案件查询(会话场景2)
 >  * 3：Q&A问答+闲聊(合并在unknow_intent的场景里)
+
+* 本demo实现流程
+>  * ![Rasa-Chatbot](./utils/Rasa-Chatbot.jpg)
+
 * demo主要参考了
 >  * [rasa_chatbot_cn](https://github.com/GaoQ1/rasa_chatbot_cn/)
 >  * [_rasa_chatbot](https://github.com/zqhZY/_rasa_chatbot)

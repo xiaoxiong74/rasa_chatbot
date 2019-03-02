@@ -20,7 +20,7 @@ tensorflow     1.12.0
 * 主要文件描述
 >  * data/rasa_dataset_training.json ：nlu训练数据
 >  * configs/_config.yml 类文件：模型流程定义(language、pipeline等)。nlu_model_config.yml中的pipeline可自定义，这里由于数据量较少，用了开源的方法和词向量(total_word_feature_extractor.dat)。如果你的rasa_dataset_training.json上数据足够多，可以尝试使用nlu_embedding_config.yml(本demo使用)配置来训练nlu model.
->  * mobile_domain.yml ：各组件、动作的定义集合
+>  * mobile_domain.yml ：各组件、动作的定义集合,其实就是特征
 >  * endpoint.yml 服务地址、会话存储地址(url)
 >  * data/mobile_edit_story.md ：定义各种对话场景,会话流训练数据
 >  * bot.py :各种训练nul 与 dialogue的方法
@@ -45,21 +45,21 @@ curl -XPOST 192.168.109.232:5000/parse -d '{"q":"我要查昨天下午的抢劫�
 python bot.py train-dialogue-keras
 ```
 
-### test dialogue   client端测试对话流程
+### test dialogue     -client端测试对话流程(开启core client服务)
 ```
 python -m rasa_core_sdk.endpoint --actions actions &
 
-python -m rasa_core.run --nlu default/current --core models/dialogue_keras --endpoints endpoints.yml  开启core服务(Client)    
+python -m rasa_core.run --nlu default/current --core models/dialogue_keras --endpoints endpoints.yml     
 
 ```
 
-### dialogue 交互式训练生成新的story(相当月自己构造对话场景数据，新的story可以append到之前训练使用的story中重新训练，重复此过程)
+### dialogue 交互式训练生成新的story(相当于自己构造对话场景数据。新的story可以append到之前训练使用的story中重新训练，重复此过程)
 ```
 python -m rasa_core.train interactive -o models/dialogue_keras -d mobile_domain.yml -s data/mobile_edit_story.md --endpoints endpoints.yml  重头开始训练story，零启动
 python -m rasa_core.train interactive --core models/dialogue_keras  --nlu default/current --endpoints endpoints.yml  通过已有story模型训练(构造更多的story,一般用这种方法)
 ```
 
-### provide dialogue service   Service端：提供对话服务接口(channel(如web)介入是开启此服务)
+### provide dialogue service    -Service端：提供对话服务接口(channel(如web)接入时开启此服务)
 ```
 python -m rasa_core_sdk.endpoint --actions actions &
 
@@ -79,9 +79,9 @@ python -m rasa_core.evaluate compare -s data/mobile_edit_story.md --core compari
 ## Some tips
 ### 批量生产nlu训练数据
 训练数据的构造是非常费时的一件事，本demo data/rasa_dataset_training.json 是通过一些规则自动生成的，节省很多人力。
-工具地址[here](https://rodrigopivi.github.io/Chatito/),
-具体用法可参考[chatito_gen_nlu_data](https://github.com/GaoQ1/chatito_gen_nlu_data)中的使用文档。
-标注语料可参考标注工具[rasa-nlu-trainer](https://rasahq.github.io/rasa-nlu-trainer/)
+>  * 工具地址[here](https://rodrigopivi.github.io/Chatito/),
+>  * 具体用法可参考[chatito_gen_nlu_data](https://github.com/GaoQ1/chatito_gen_nlu_data)中的使用文档。
+>  * 标注语料可参考标注工具[rasa-nlu-trainer](https://rasahq.github.io/rasa-nlu-trainer/)
 
 ### UI界面接入
 UI界面接入可参考 https://github.com/howl-anderson/WeatherBot_UI 直接更改相应的端口或ip即可使用。
@@ -96,8 +96,8 @@ UI界面接入可参考 https://github.com/howl-anderson/WeatherBot_UI 直接更
 
 ## Q&A
 ###  ner_duckling 无法使用
-rasa_nlu=0.14.0 开始就不使用ner_duckling，仅保留ner_duckling_http。因自己启动ner_duckling_http
-报错，故把ner_duckling的模块又重新添加到了rasa_nlu中。添加方法如下：
+从rasa_nlu=0.14.0 开始就不使用ner_duckling，详见[changelog](https://rasa.com/docs/nlu/changelog/)，仅保留ner_duckling_http。因自己启动ner_duckling_http
+报错，故自己把ner_duckling的模块又重新添加到了rasa_nlu中。添加方法如下：
 >  * 1、找到rasa_nul包的位置，我的是/root/anaconda3/envs/rasa/lib/python3.6/site-packages/rasa_nlu
 >  * 2、在rasa_nlu/extractors(前置路径省略) 中添加duckling_extractor.py文件 直接复制粘贴：https://github.com/RasaHQ/rasa_nlu/blob/0.13.x/rasa_nlu/extractors/duckling_extractor.py
 >  * 3、在rasa_nlu/registry.py 中注册duckling_extractor组件

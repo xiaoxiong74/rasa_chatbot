@@ -1,0 +1,14 @@
+language: "zh"
+
+pipeline:
+- name: "tokenizer_jieba"
+- name: "ner_crf"
+- name: "ner_duckling"
+  language: "zh$core"
+  dimensions: [ "time", "number", "duration", "phone-number"]
+- name: "jieba_pseg_extractor"
+  part_of_speech: ["nr"]
+- name: "intent_featurizer_wordvector"
+  vector: "data/news_12g_baidubaike_20g_novel_90g_embedding_64.bin"
+  limit: 100000
+- name: "intent_classifier_tensorflow_embedding"

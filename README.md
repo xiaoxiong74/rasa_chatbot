@@ -1,7 +1,7 @@
 # Rasa Core and Rasa NLU
 
 ## Introduction
-这个聊天机器人demo是用开源NLU框架[rasa-nlu](https://github.com/RasaHQ/rasa_nlu/tree/master/rasa_nlu)完成意图识别与实体识别，用[rasa-core](https://github.com/RasaHQ/rasa_core)完成对话管理和与对话生成。
+这个聊天机器人demo是用开源NLU框架[rasa-nlu](https://github.com/RasaHQ/rasa_nlu)完成意图识别与实体识别，用[rasa-core](https://github.com/RasaHQ/rasa_core)完成对话管理和与对话生成。
 * 本demo完成的对话主要有:
 >  * 1: 办理套餐、查询话费和流量(会话场景1)
 >  * 2：案件查询(会话场景2)

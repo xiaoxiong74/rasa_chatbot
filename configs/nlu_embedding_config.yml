@@ -6,6 +6,8 @@ pipeline:
 - name: "ner_duckling"
   language: "zh$core"
   dimensions: [ "time", "number", "duration", "phone-number"]
+- name: "jieba_pseg_extractor"
+  part_of_speech: ["nr"]
 - name: "intent_featurizer_count_vectors"
   OOV_token: oov
   token_pattern: '(?u)\b\w+\b'

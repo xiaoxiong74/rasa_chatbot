@@ -11,7 +11,7 @@ from typing import Dict, Text, Any, List, Union
 
 from rasa_core_sdk import ActionExecutionRejection
 from rasa_core_sdk import Tracker
-from rasa_core_sdk.events import SlotSet
+from rasa_core_sdk.events import SlotSet, AllSlotsReset
 from rasa_core_sdk.executor import CollectingDispatcher
 from rasa_core_sdk.forms import FormAction, REQUESTED_SLOT
 
@@ -28,7 +28,7 @@ def extract_item(item):
 
 
 def get_response(msg):
-    key = ''
+    key = '02703d8281304352a359bf1900e2058e'
     api = 'http://www.tuling123.com/openapi/api?key={}&info={}'.format(key, msg)
     return requests.get(api).json()
 
@@ -43,7 +43,7 @@ class ActionSearchConsume(Action):
         if item is None:
             dispatcher.utter_message("您好，我现在只会查话费和流量")
             dispatcher.utter_message("你可以这样问我：“帮我查话费”")
-            return []
+            return [AllSlotsReset()]
 
         time = tracker.get_slot("time")
         if time is None:
@@ -56,7 +56,7 @@ class ActionSearchConsume(Action):
                 "您好，您{}共使用{}二百八十兆，剩余三十兆。".format(time, item))
         else:
             dispatcher.utter_message("您好，您{}共消费二十八元。".format(time))
-        return []
+        return [AllSlotsReset()]
 
 
 class ActionUnknowIntent(Action):
@@ -67,7 +67,7 @@ class ActionUnknowIntent(Action):
         return 'action_unknown_intent'
  
     def run(self, dispatcher, tracker, domain):
-        # from rasa_core.events import UserUtteranceReverted
+        from rasa_core.events import UserUtteranceReverted
         # text = tracker.latest_message.get('text')
         # qa_message = get_qa(text)
         # if qa_message != "未找到答案":
@@ -107,38 +107,39 @@ class CaseForm(FormAction):
 
     def slot_mappings(self):
         return {"case": self.from_entity(entity="case", not_intent="unknown_intent"),
-                "place": [self.from_entity(entity="place", intent=["inform_case", "searchCases"]),
-                          self.from_text(intent="inform_case")],
-                "day": [self.from_entity(entity="day", intent=["inform_case", "searchCases"]),
-                        self.from_text(intent="inform_case")]
+                "place": [self.from_entity(entity="place"),
+                          self.from_text()],
+                "day": [self.from_entity(entity="day"),
+                        self.from_text()]
                 }
 
-    def validate(self,
-                 dispatcher: CollectingDispatcher,
-                 tracker: Tracker,
-                 domain: Dict[Text, Any]) -> List[Dict]:
-        """Validate extracted requested slot
-            else reject the execution of the form action
-        """
-        # extract other slots that were not requested
-        # but set by corresponding entity
-        slot_values = self.extract_other_slots(dispatcher, tracker, domain)
-
-        # extract requested slot
-        slot_to_fill = tracker.get_slot(REQUESTED_SLOT)
-        if slot_to_fill:
-            slot_values.update(self.extract_requested_slot(dispatcher,
-                                                           tracker, domain))
-            if not slot_values:
-                # reject form action execution
-                # if some slot was requested but nothing was extracted
-                # it will allow other policies to predict another action
-                raise ActionExecutionRejection(self.name(),
-                                               "Failed to validate slot {0} "
-                                               "with action {1}"
-                                               "".format(slot_to_fill,
-                                                         self.name()))
-        return [SlotSet(slot, value) for slot, value in slot_values.items()]
+    # # 无数据验证可省略
+    # def validate(self,
+    #              dispatcher: CollectingDispatcher,
+    #              tracker: Tracker,
+    #              domain: Dict[Text, Any]) -> List[Dict]:
+    #     """Validate extracted requested slot
+    #         else reject the execution of the form action
+    #     """
+    #     # extract other slots that were not requested
+    #     # but set by corresponding entity
+    #     slot_values = self.extract_other_slots(dispatcher, tracker, domain)
+    #
+    #     # extract requested slot
+    #     slot_to_fill = tracker.get_slot(REQUESTED_SLOT)
+    #     if slot_to_fill:
+    #         slot_values.update(self.extract_requested_slot(dispatcher,
+    #                                                        tracker, domain))
+    #         if not slot_values:
+    #             # reject form action execution
+    #             # if some slot was requested but nothing was extracted
+    #             # it will allow other policies to predict another action
+    #             raise ActionExecutionRejection(self.name(),
+    #                                            "Failed to validate slot {0} "
+    #                                            "with action {1}"
+    #                                            "".format(slot_to_fill,
+    #                                                      self.name()))
+    #     return [SlotSet(slot, value) for slot, value in slot_values.items()]
 
     def submit(self, dispatcher, tracker, domain):
         # type: (CollectingDispatcher, Tracker, Dict[Text, Any]) -> List[Dict]
@@ -146,9 +147,6 @@ class CaseForm(FormAction):
             after all required slots are filled"""
         # utter submit template
         dispatcher.utter_template('utter_search_template', tracker)
-        # slot_values = self.extract_other_slots(dispatcher, tracker, domain)
-        # slot_values.update(self.extract_requested_slot(dispatcher,
-        #                                                tracker, domain))
         dispatcher.utter_message("{},在{}发生一起性质恶劣的{},引起全市人民的高度关注，以下是详细信息："
                                  .format(tracker.get_slot("day"), tracker.get_slot("place"), tracker.get_slot("case")))
-        return []
+        return [AllSlotsReset()]

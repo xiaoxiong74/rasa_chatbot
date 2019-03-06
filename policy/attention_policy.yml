@@ -1,8 +1,15 @@
 policies:
+  - name: MemoizationPolicy
+    max_history: 8
+  - name: FormPolicy
   - name: policy.attention_policy.AttentionPolicy
     epochs: 100
     featurizer:
     - name: MaxHistoryTrackerFeaturizer
-      max_history: 5
+      max_history: 8
       state_featurizer:
         - name: LabelTokenizerSingleStateFeaturizer
+  - name: FallbackPolicy
+    fallback_action_name: 'action_unknown_intent'
+    nlu_threshold: 0.7,
+    core_threshold: 0.3

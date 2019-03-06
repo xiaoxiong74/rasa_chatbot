@@ -15,6 +15,7 @@ from rasa_core.policies.memoization import MemoizationPolicy
 from rasa_core.policies.fallback import FallbackPolicy
 from rasa_core.policies.form_policy import FormPolicy
 from rasa_core.policies.embedding_policy import EmbeddingPolicy
+from rasa_core import config
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +31,8 @@ def train_dialogue_keras(domain_file="mobile_domain.yml",
     )
     
     agent = Agent(domain_file,
-                  policies=[MobilePolicy(epochs=100, batch_size=16),
+                  policies=[MemoizationPolicy(max_history=8),
+                            MobilePolicy(epochs=100, batch_size=16, max_history=8),
                             FormPolicy(),
                             fallback])
 
@@ -50,7 +52,7 @@ def train_dialogue_embed(domain_file="mobile_domain.yml",
 
     fallback = FallbackPolicy(
         fallback_action_name="action_default_fallback",
-        nlu_threshold=0.5,
+        nlu_threshold=0.7,
         core_threshold=0.3
     )
     
@@ -71,16 +73,10 @@ def train_dialogue_embed(domain_file="mobile_domain.yml",
 def train_dialogue_transformer(domain_file="mobile_domain.yml",
                                model_path="models/dialogue_transformer",
                                training_data_file="data/mobile_edit_story.md"):
-
-    fallback = FallbackPolicy(
-        fallback_action_name="action_unknown_intent",
-        nlu_threshold=0.7,
-        core_threshold=0.3
-    )
-
+    # 通过加载yml配置文件方式配置policy
+    policies = config.load('./policy/attention_policy.yml')
     agent = Agent(domain_file,
-                  policies=[FormPolicy(),
-                            AttentionPolicy(epochs=100), fallback])
+                  policies=policies)
 
     training_data = agent.load_data(training_data_file)
     agent.train(
@@ -134,6 +130,20 @@ def train_nlu_elmo():
     return model_directory
 
 
+def train_nlu_wordvector():
+    from rasa_nlu_gao.training_data import load_data
+    from rasa_nlu_gao import config
+    from rasa_nlu_gao.model import Trainer
+
+    training_data = load_data('data/rasa_dataset_training.json')
+    trainer = Trainer(config.load("configs/wordvector_config.yml"))
+    trainer.train(training_data)
+    model_directory = trainer.persist('models/wordvector/',
+                                      fixed_model_name="current")
+
+    return model_directory
+
+
 if __name__ == '__main__':
     utils.configure_colored_logging(loglevel="INFO")
 
@@ -142,7 +152,8 @@ if __name__ == '__main__':
 
     parser.add_argument(
             'task',
-            choices=["train-nlu", "train-dialogue-keras", "train-dialogue-embed", "train-nlu-gao", "train-nlu-elmo", "train-dialogue-transformer"],
+            choices=["train-nlu", "train-dialogue-keras", "train-dialogue-embed", "train-nlu-gao", "train-nlu-elmo",
+                     "train-dialogue-transformer", "train-nlu-wordvector"],
             help="what the bot should do ?")
     task = parser.parse_args().task
 
@@ -153,6 +164,8 @@ if __name__ == '__main__':
         train_nlu_gao()
     elif task == "train-nlu-elmo":
         train_nlu_elmo()
+    elif task == "train-nlu-wordvector":
+        train_nlu_wordvector()
     elif task == "train-dialogue-keras":
         train_dialogue_keras()
     elif task == "train-dialogue-embed":

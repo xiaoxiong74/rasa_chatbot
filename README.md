@@ -27,13 +27,15 @@ tensorflow     1.12.0
 >  * mobile_domain.yml ：各组件、动作的定义集合,其实就是特征
 >  * endpoint.yml 服务地址、会话存储地址(url)
 >  * data/mobile_edit_story.md ：定义各种对话场景,会话流训练数据
->  * bot.py :各种训练nul 与 dialogue的方法
+>  * bot.py :各种训练nul与 dialogue的方法
 >  * actions.py :负责执行自定义 Action (通常都是具体的业务动作，在本项目中通信业务查询、案件查询、闲聊或Q&A)
->  * data/total_word_feature_extractor.dat: 一个训练好的中文特征数据
+>  * data/total_word_feature_extractor.dat : 一个训练好的中文特征数据(使用nlu_moel_config.yml配置训练时会用到)
+>  * data/news_12g_baidubaike_20g_novel_90g_embedding_64.bin ：训练好的word2vec模型(train_nlu_wordvector：wordvector_config.yml中用到),可下载更大的训练好的模型，下载地址：[连接](https://pan.baidu.com/s/1ckkH_eT-WS4SN73Iq9Q_5A ) 密码：9aza 
+
 ## Command
-### train nlu model 训练NLU模型
+### train nlu model 训练NLU模型(可选择其他的，如train-nlu-wordvector)
 ```
-python bot.py train-nlu   
+python bot.py train-nlu
 ```
 
 ### test nlu model 测试NLU模型，主要是看意图是否识别准确，是否抽取到实体
@@ -44,7 +46,7 @@ curl -XPOST 192.168.109.232:5000/parse -d '{"q":"我要查昨天下午的抢劫�
 ```
 
 
-### train dialogue 训练会话流程
+### train dialogue 训练会话流程(可选择其他的，如train-nlu-transformer)
 ```
 python bot.py train-dialogue-keras
 ```
@@ -111,6 +113,11 @@ UI界面接入可参考 https://github.com/howl-anderson/WeatherBot_UI 直接更
 ### train_dialogue_transformer训练报维度不匹配错误
 在policy/attention_keras 中要求输入的特征是偶数个，即mobile_domain.yml的特征数据量，若报错删除一个或增加一个特征即可
 
+### train_nlu_wordvector报编码错误
+因为rasa_nlu_gao中的word2vec模型使用的txt文本模型，我这里用的bin二进制模型，所以如果使用bin的二进制模型需要更改
+rasa_nlu_gao中的源码。修改方法：
+> * 1、定位到site-packages/rasa_nlu_gao/featurizers/intent_featurizer_wordvector.py
+> * 2、定位到两处模型加载的地方 model = gensim.models.KeyedVectors.load_word2vec_format 将里面的binary 改为True即可
 
 ## Some magical functions
 [rasa-nlu-gao](https://github.com/GaoQ1/rasa_nlu_gq)新增了N多个个自定义组件，具体用法和说明请参考该作者的 [rasa对话系统踩坑记](https://www.jianshu.com/u/4b912e917c2e)，个人觉得对新入坑聊天机器人的童鞋很有帮助，感谢作者的贡献。简单使用方法如下：

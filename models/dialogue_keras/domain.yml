@@ -26,6 +26,7 @@ entities:
 - place
 - case
 - day
+- number
 forms:
 - case_form
 intents:

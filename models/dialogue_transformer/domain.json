@@ -1,14 +1,15 @@
 {
   "states": [
-    "intent_baike_search",
     "intent_confirm",
     "intent_deny",
     "intent_goodbye",
     "intent_greet",
     "intent_inform",
+    "intent_inform_case",
     "intent_inform_time",
     "intent_request_management",
     "intent_request_search",
+    "intent_searchCases",
     "intent_thanks",
     "intent_unknown_intent",
     "entity_item",
@@ -16,9 +17,16 @@
     "entity_phone_number",
     "entity_price",
     "entity_package",
+    "entity_place",
+    "entity_case",
+    "entity_day",
+    "entity_number",
+    "slot_case_0",
+    "slot_day_0",
     "slot_item_0",
     "slot_package_0",
     "slot_phone_number_0",
+    "slot_place_0",
     "slot_price_0",
     "slot_time_0",
     "prev_action_listen",
@@ -39,6 +47,10 @@
     "prev_utter_ask_phonenum",
     "prev_utter_confirm",
     "prev_action_search_consume",
-    "prev_action_unknown_intent"
+    "prev_action_unknown_intent",
+    "prev_utter_ask_place",
+    "prev_utter_ask_casetime",
+    "prev_case_form",
+    "active_form_case_form"
   ]
 }

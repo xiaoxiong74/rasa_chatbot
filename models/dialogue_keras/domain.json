@@ -20,6 +20,7 @@
     "entity_place",
     "entity_case",
     "entity_day",
+    "entity_number",
     "slot_case_0",
     "slot_day_0",
     "slot_item_0",

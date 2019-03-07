@@ -2,9 +2,12 @@
   "action_fingerprints": {
     "action_listen": {
       "slots": [
-        "package",
         "item",
-        "time"
+        "day",
+        "time",
+        "package",
+        "place",
+        "case"
       ]
     },
     "utter_goodbye": {
@@ -13,26 +16,36 @@
     "action_restart": {
       "slots": []
     },
+    "action_unknown_intent": {
+      "slots": []
+    },
     "utter_thanks": {
       "slots": []
     },
-    "action_unknown_intent": {
-      "slots": []
+    "case_form": {
+      "slots": [
+        "place",
+        "requested_slot",
+        "day",
+        "case"
+      ]
     }
   },
   "python": "3.6.8",
   "max_histories": [
-    5,
-    5,
+    8,
+    2,
+    8,
     null
   ],
   "ensemble_name": "rasa_core.policies.ensemble.SimplePolicyEnsemble",
   "policy_names": [
     "rasa_core.policies.memoization.MemoizationPolicy",
+    "rasa_core.policies.form_policy.FormPolicy",
     "policy.attention_policy.AttentionPolicy",
     "rasa_core.policies.fallback.FallbackPolicy"
   ],
-  "trained_at": "20190228-103129",
+  "trained_at": "20190306-174216",
   "rasa_core": "0.13.2",
   "tensorflow": "1.12.0",
   "sklearn": "0.20.2"

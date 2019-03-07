@@ -28,7 +28,7 @@ def extract_item(item):
 
 
 def get_response(msg):
-    key = '02703d8281304352a359bf1900e2058e'
+    key = ''   # 自己的图灵机器人key
     api = 'http://www.tuling123.com/openapi/api?key={}&info={}'.format(key, msg)
     return requests.get(api).json()
 

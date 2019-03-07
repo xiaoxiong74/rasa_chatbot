@@ -315,3 +315,80 @@
     - utter_ask_morehelp
 * deny
     - utter_goodbye
+
+## Generated Story No23    
+* unknown_intent
+    - action_unknown_intent
+* searchCases{"case": "\u62a2\u52ab\u6848"}
+    - slot{"case": "\u62a2\u52ab\u6848"}
+    - utter_ask_place
+* inform_case{"place": "\u7ea2\u65d7 \u6cb3\u6c9f"}
+    - slot{"place": "\u7ea2\u65d7 \u6cb3\u6c9f"}
+    - utter_ask_casetime
+* inform_case{"day": "\u4e0a\u5468\u4e94", "number": 5.0, "time": {"from": "2019-03-01T12:00:00.000Z", "to": "2019-03-01T19:00:00.000Z"}}
+    - slot{"day": "\u4e0a\u5468\u4e94"}
+    - slot{"time": {"from": "2019-03-01T12:00:00.000Z", "to": "2019-03-01T19:00:00.000Z"}}
+    - case_form
+    - form{"name": "case_form"}
+    - slot{"day": "\u4e0a\u5468\u4e94"}
+    - form: reset_slots
+    - form{"name": null}
+    - slot{"requested_slot": null}
+    - utter_ask_morehelp
+* searchCases{"day": "\u524d\u5929", "case": "\u6740\u4eba\u6848", "time": {"from": "2019-03-03T18:00:00.000Z", "to": "2019-03-04T00:00:00.000Z"}}
+    - slot{"case": "\u6740\u4eba\u6848"}
+    - slot{"day": "\u524d\u5929"}
+    - slot{"time": {"from": "2019-03-03T18:00:00.000Z", "to": "2019-03-04T00:00:00.000Z"}}
+    - utter_ask_place
+* inform_case{"place": "\u4e5d\u66f2\u6cb3", "number": "9.0", "time": "2019-03-05T09:00:00.000Z"}
+    - slot{"place": "\u4e5d\u66f2\u6cb3"}
+    - slot{"time": "2019-03-05T09:00:00.000Z"}
+    - case_form
+    - form{"name": "case_form"}
+    - slot{"place": "\u4e5d\u66f2\u6cb3"}
+    - form: reset_slots
+    - form{"name": null}
+    - slot{"requested_slot": null}
+    - utter_ask_morehelp
+* unknown_intent{"place": "\u91cd\u5e86", "time": "2019-03-05T00:00:00.000Z"}
+    - slot{"place": "\u91cd\u5e86"}
+    - slot{"time": "2019-03-05T00:00:00.000Z"}
+    - action_unknown_intent
+
+## Generated Story No24
+* searchCases{"case": "\u6848\u5b50"}
+    - slot{"case": "\u6848\u5b50"}
+    - utter_ask_place
+* unknown_intent{"place": "\u5317\u789a"}
+    - slot{"place": "\u5317\u789a"}
+    - utter_ask_time
+* inform_case{"day": "18 \u5e74 1 \u6708 9 \u65e5", "number": 9.0, "duration": 1.0, "time": "2020-01-09T00:00:00.000Z"}
+    - slot{"day": "18 \u5e74 1 \u6708 9 \u65e5"}
+    - slot{"time": "2020-01-09T00:00:00.000Z"}
+    - case_form
+    - form{"name": "case_form"}
+    - slot{"day": "18 \u5e74 1 \u6708 9 \u65e5"}
+    - form: reset_slots
+    - form{"name": null}
+    - slot{"requested_slot": null}
+    - utter_ask_morehelp
+* searchCases{"place": "\u5927 \u9f99\u5c71", "case": "\u62a2\u52ab\u6848"}
+    - slot{"case": "\u62a2\u52ab\u6848"}
+    - slot{"place": "\u5927 \u9f99\u5c71"}
+    - utter_ask_casetime
+* inform_case{"day": "\u524d\u5929", "time": "2019-03-04T00:00:00.000Z"}
+    - slot{"day": "\u524d\u5929"}
+    - slot{"time": "2019-03-04T00:00:00.000Z"}
+    - case_form
+    - form{"name": "case_form"}
+    - slot{"day": "\u524d\u5929"}
+    - form: reset_slots
+    - form{"name": null}
+    - slot{"requested_slot": null}
+    - utter_ask_morehelp
+* unknown_intent
+    - action_unknown_intent
+* unknown_intent
+    - action_unknown_intent
+* deny{"nr": "\u54c8"}
+    - utter_goodbye

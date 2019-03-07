@@ -8,7 +8,7 @@
 >  * 3：Q&A问答+闲聊(合并在unknow_intent的场景里)
 
 * 本demo实现流程
->  * ![Rasa-Chatbot](./utils/Rasa-Chatbot.jpg)
+>  ![Rasa-Chatbot](./utils/Rasa-Chatbot.jpg)
 
 * demo主要参考了
 >  * [rasa_chatbot_cn](https://github.com/GaoQ1/rasa_chatbot_cn/)
@@ -16,10 +16,12 @@
 >  * [WeatherBot](https://github.com/howl-anderson/WeatherBot)
 * 主要包版本
 ```
+python:        3.6.8
 rasa-nlu:      0.14.4
 rasa-core:     0.13.2
 rasa-core-sdk: 0.12.1
 tensorflow     1.12.0
+keras          2.2.4
 ```
 * 主要文件描述
 >  * data/rasa_dataset_training.json ：nlu训练数据
@@ -32,6 +34,7 @@ tensorflow     1.12.0
 >  * data/total_word_feature_extractor.dat : 一个训练好的中文特征数据(使用nlu_moel_config.yml配置训练时会用到)
 >  * data/news_12g_baidubaike_20g_novel_90g_embedding_64.bin ：训练好的word2vec模型(train_nlu_wordvector：wordvector_config.yml中用到),可下载更大的训练好的模型，下载地址：[连接](https://pan.baidu.com/s/1ckkH_eT-WS4SN73Iq9Q_5A ) 密码：9aza 
 
+* 环境搭建：详见连接[Rasa聊天机器人（一）:简介及环境搭建](https://blog.csdn.net/qq_42189083/article/details/88310407)
 ## Command
 ### train nlu model 训练NLU模型(可选择其他的，如train-nlu-wordvector)
 ```

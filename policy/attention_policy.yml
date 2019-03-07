@@ -11,5 +11,5 @@ policies:
         - name: LabelTokenizerSingleStateFeaturizer
   - name: FallbackPolicy
     fallback_action_name: 'action_unknown_intent'
-    nlu_threshold: 0.7,
+    nlu_threshold: 0.7
     core_threshold: 0.3

@@ -35,6 +35,7 @@ keras          2.2.4
 >  * data/news_12g_baidubaike_20g_novel_90g_embedding_64.bin ：训练好的word2vec模型(train_nlu_wordvector：wordvector_config.yml中用到),可下载更大的训练好的模型，下载地址：[连接](https://pan.baidu.com/s/1ckkH_eT-WS4SN73Iq9Q_5A ) 密码：9aza 
 
 * 环境搭建：详见连接[Rasa聊天机器人（一）:简介及环境搭建](https://blog.csdn.net/qq_42189083/article/details/88310407)
+* 基本效果可见：[Rasa聊天机器人（二）:训练及构建](https://blog.csdn.net/qq_42189083/article/details/88076128)
 ## Command
 ### train nlu model 训练NLU模型(可选择其他的，如train-nlu-wordvector)
 ```
